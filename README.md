@@ -71,17 +71,17 @@ Overall churn rate:
 
 Examples of observed churn rates:
 
-| Factor            | Group    | Churn Rate |
-| ----------------- | -------- | ---------: |
-| Customer segment  | Mass     |     39.48% |
-| Customer segment  | Emerging |     17.62% |
-| Customer segment  | Affluent |      3.10% |
-| Customer segment  | Priority |      0.07% |
-| Digital behaviour | Offline  |     21.14% |
-| Digital behaviour | Mobile   |      6.50% |
-| Loyalty           | Bronze   |     20.24% |
-| Loyalty           | Silver   |      3.68% |
-| Loyalty           | Gold     |      2.82% |
+| Factor | Group | Churn Rate |
+|---|---|---:|
+| Customer segment | Mass | 39.48% |
+| Customer segment | Emerging | 17.62% |
+| Customer segment | Affluent | 3.10% |
+| Customer segment | Priority | 0.07% |
+| Digital behaviour | Offline | 21.14% |
+| Digital behaviour | Mobile | 6.50% |
+| Loyalty | Bronze | 20.24% |
+| Loyalty | Silver | 3.68% |
+| Loyalty | Gold | 2.82% |
 
 Churn also decreased substantially as the number of services held by a customer increased.
 
@@ -127,12 +127,12 @@ Because churn represents a minority class, class imbalance was considered when t
 
 ### Model comparison
 
-| Model               | Precision | Recall |    F1 | ROC-AUC | PR-AUC |
-| ------------------- | --------: | -----: | ----: | ------: | -----: |
-| Logistic Regression |     0.348 |  0.836 | 0.492 |   0.822 |  0.467 |
-| Decision Tree       |     0.382 |  0.811 | 0.520 |   0.840 |  0.482 |
-| Random Forest       |     0.384 |  0.851 | 0.529 |   0.851 |  0.528 |
-| Gradient Boosting   |     0.619 |  0.335 | 0.435 |   0.856 |  0.541 |
+| Model | Precision | Recall | F1 | ROC-AUC | PR-AUC |
+|---|---:|---:|---:|---:|---:|
+| Logistic Regression | 0.348 | 0.836 | 0.492 | 0.822 | 0.467 |
+| Decision Tree | 0.382 | 0.811 | 0.520 | 0.840 | 0.482 |
+| Random Forest | 0.384 | 0.851 | 0.529 | 0.851 | 0.528 |
+| Gradient Boosting | 0.619 | 0.335 | 0.435 | 0.856 | 0.541 |
 
 Gradient Boosting achieved the strongest ROC-AUC and PR-AUC.
 

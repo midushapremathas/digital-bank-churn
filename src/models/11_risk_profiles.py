@@ -1,15 +1,12 @@
 import pandas as pd
 
-# Load the cleaned dataset
 df = pd.read_csv("data/processed/cleaned_churn_data.csv")
 
 print("Dataset loaded successfully.")
 print("Shape:", df.shape)
 
-# Create a simple risk profile using the model's predicted probabilities
 print("\nPreparing risk profile analysis...")
 
-# Separate features and target
 X = df.drop(columns=["exit"])
 y = df["exit"]
 
@@ -19,7 +16,6 @@ print("Target:", y.shape)
 
 from sklearn.model_selection import train_test_split
 
-# Split the data using the same approach as our main model
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -35,7 +31,6 @@ print("Test data:", X_test.shape)
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 
-# Identify categorical and numerical features
 categorical_features = [
     "gender",
     "occupation",
@@ -58,7 +53,6 @@ numerical_features = [
     "active_member"
 ]
 
-# One-hot encode categorical variables
 preprocessor = ColumnTransformer(
     transformers=[
         ("categorical", OneHotEncoder(handle_unknown="ignore"), categorical_features),
@@ -74,7 +68,6 @@ print("Processed training data:", X_train_processed.shape)
 
 from sklearn.ensemble import GradientBoostingClassifier
 
-# Train the Gradient Boosting model
 model = GradientBoostingClassifier(
     n_estimators=200,
     learning_rate=0.05,
@@ -86,13 +79,11 @@ model.fit(X_train_processed, y_train)
 
 print("\nGradient Boosting model trained successfully.")
 
-# Predict churn probabilities
 y_probability = model.predict_proba(X_test_processed)[:, 1]
 
 print("\nChurn probabilities generated.")
 print("Highest predicted risk:", y_probability.max())
 
-# Create risk segments for the test customers
 risk_segments = pd.cut(
     y_probability,
     bins=[0, 0.25, 0.50, 0.75, 1.00],
@@ -103,7 +94,6 @@ risk_segments = pd.cut(
 print("\nRisk segment counts:")
 print(risk_segments.value_counts().sort_index())
 
-# Add predictions and risk segments to the test customer data
 risk_profile = X_test.copy()
 risk_profile["predicted_churn_probability"] = y_probability
 risk_profile["risk_segment"] = risk_segments
@@ -111,7 +101,6 @@ risk_profile["risk_segment"] = risk_segments
 print("\nRisk profile created.")
 print(risk_profile[["predicted_churn_probability", "risk_segment"]].head())
 
-# Analyse the characteristics of high-risk customers
 high_risk = risk_profile[
     risk_profile["risk_segment"].isin(["High", "Critical"])
 ]
@@ -127,7 +116,6 @@ print(
     ].mean()
 )
 
-# Analyse categorical characteristics of high-risk customers
 
 print("\nHigh-risk customer categorical profile:")
 
@@ -146,7 +134,6 @@ print(high_risk["digital_behavior"].value_counts(normalize=True))
 print("\nNumber of services:")
 print(high_risk["nums_service"].value_counts(normalize=True).sort_index())
 
-# Compare high-risk customers with the rest of the test population
 
 other_customers = risk_profile[
     risk_profile["risk_segment"].isin(["Low", "Moderate"])
@@ -178,7 +165,6 @@ print(pd.DataFrame({
     "Lower-risk": other_customers["digital_behavior"].value_counts(normalize=True)
 }))
 
-# Evaluate observed churn rate within each predicted risk segment
 
 risk_profile["actual_churn"] = y_test.values
 
@@ -188,7 +174,6 @@ print(
     risk_profile.groupby("risk_segment")["actual_churn"].mean()
 )
 
-# Calculate customer value at risk
 
 high_risk_balance = high_risk["balance"].sum()
 high_risk_income = high_risk["monthly_ir"].sum()
@@ -201,7 +186,6 @@ print("Total balance held by high-risk customers:",
 print("Total monthly income associated with high-risk customers:",
       high_risk_income)
 
-# Calculate the proportion of total customer balance at risk
 
 total_balance = risk_profile["balance"].sum()
 
@@ -212,7 +196,6 @@ balance_at_risk_percentage = (
 print("\nProportion of customer balance associated with high-risk customers:")
 print(f"{balance_at_risk_percentage:.2f}%")
 
-# Calculate customer value associated with critical-risk customers
 
 critical_risk = risk_profile[
     risk_profile["risk_segment"] == "Critical"

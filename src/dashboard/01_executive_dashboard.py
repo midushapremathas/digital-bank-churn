@@ -2,13 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# Load cleaned data
 df = pd.read_csv("data/processed/cleaned_churn_data.csv")
 
 
-# -----------------------------
-# Key metrics
-# -----------------------------
 
 total_customers = len(df)
 churned_customers = df["exit"].sum()
@@ -22,9 +18,6 @@ print(f"Churned customers: {churned_customers:,}")
 print(f"Overall churn rate: {churn_rate:.2f}%")
 
 
-# -----------------------------
-# Churn by customer segment
-# -----------------------------
 
 segment_churn = (
     df.groupby("customer_segment")["exit"]
@@ -37,9 +30,6 @@ print("\nChurn rate by customer segment:")
 print(segment_churn)
 
 
-# -----------------------------
-# Churn by number of services
-# -----------------------------
 
 services_churn = (
     df.groupby("nums_service")["exit"]
@@ -51,9 +41,6 @@ print("\nChurn rate by number of services:")
 print(services_churn)
 
 
-# -----------------------------
-# Churn by loyalty level
-# -----------------------------
 
 loyalty_churn = (
     df.groupby("loyalty_level")["exit"]
@@ -66,9 +53,6 @@ print("\nChurn rate by loyalty level:")
 print(loyalty_churn)
 
 
-# -----------------------------
-# Churn by digital behaviour
-# -----------------------------
 
 digital_churn = (
     df.groupby("digital_behavior")["exit"]
@@ -81,10 +65,6 @@ print("\nChurn rate by digital behaviour:")
 print(digital_churn)
 
 
-# -----------------------------
-# Visualisation 1:
-# Churn by customer segment
-# -----------------------------
 
 plt.figure(figsize=(10, 6))
 
@@ -104,10 +84,6 @@ plt.savefig(
 plt.close()
 
 
-# -----------------------------
-# Visualisation 2:
-# Churn by number of services
-# -----------------------------
 
 plt.figure(figsize=(10, 6))
 
@@ -128,10 +104,6 @@ plt.savefig(
 plt.close()
 
 
-# -----------------------------
-# Visualisation 3:
-# Churn by loyalty level
-# -----------------------------
 
 plt.figure(figsize=(10, 6))
 
@@ -151,10 +123,6 @@ plt.savefig(
 plt.close()
 
 
-# -----------------------------
-# Visualisation 4:
-# Churn by digital behaviour
-# -----------------------------
 
 plt.figure(figsize=(10, 6))
 
@@ -174,10 +142,6 @@ plt.savefig(
 plt.close()
 
 
-# -----------------------------
-# Visualisation 5:
-# Customer age distribution
-# -----------------------------
 
 plt.figure(figsize=(10, 6))
 
